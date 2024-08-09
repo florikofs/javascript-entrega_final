@@ -1,5 +1,6 @@
 
 //CÁLCULOS
+
 class calculos {
     constructor() {
         this.invitados = 0;
@@ -17,7 +18,16 @@ class calculos {
         this.bebedores = this.invitados - this.abstemios;
         console.log("Cantidad de bebedores " + this.bebedores);
     }
-    
+
+    //CALCULO DE LITROS POR BEBIDA (SEGÚN TIPO DE INVITADOS) ESTO HAY Q REVISAR!!!!!!!!!!
+    calculoLitros = () => {
+        if (this.bebidaConAlcohol == true) {
+            this.bebidaLtTotal = this.litrosBotella * this.consumoPromedio * this.bebedores;
+        } else {
+            this.bebidaLtTotal = this.litrosBotella * this.consumoPromedio * this.abstemios;
+        }
+    }
+
 }
 
 //CARD PRODUCTO DEL STORE
@@ -38,9 +48,16 @@ function crearListadoProd(listado) {
 
 // AGREGAR AL CARRITO
 function agregarProducto(id) {
-    const producto = PRODUCTOS.find(item => item.id == id);
     const carrito = JSON.parse(localStorage.getItem("productos_agregados")) || [];
-    carrito.push(producto);
+    const i = carrito.findIndex(item => item.id == id)
+    if (i == -1) {
+        const producto = PRODUCTOS.find(item => item.id == id);
+        producto.cantidad = 1;
+        carrito.push(producto);
+    } else {
+        carrito[i].cantidad += 1;
+    }
+
     guardarCarritoLS(carrito);
     const prodAgregados = document.getElementById("productosAgregados");
     prodAgregados.innerHTML = "";
@@ -55,7 +72,7 @@ function cargarCarritoLS() {
     const carrito = JSON.parse(localStorage.getItem("productos_agregados")) || [];
     carrito.forEach(e => {
         const prodAgregados = document.getElementById("productosAgregados");
-        prodAgregados.innerHTML += `<p>${e.nombre + " " + e.marca}</p>`;
+        prodAgregados.innerHTML += `<p>${e.nombre + " " + e.marca + " " + e.cantidad}</p>`;
     })
 }
 
