@@ -144,7 +144,7 @@ let calculos = new Calculos();
 let PRODUCTOS = [];
 cargarInvitadosLS();
 
-fetch('javascript-entrega_final/datos.json')
+fetch('datos.json')
     .then((res) => res.json())
     .then((data) => {
         crearListadoProd(data);
