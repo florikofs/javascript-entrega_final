@@ -55,13 +55,15 @@ class Calculos {
 function crearListadoProd(listado) {
     listado.forEach(producto => {
         let cardProd = `<div class="card text-center m-2" style="width: 16rem;">
-                <img src="${producto.img}" class="card-img-top" alt="${producto.nombre}">
-                <div class="card-body">
-                    <h5 class="card-title">${producto.nombre + " " + producto.litrosBotella + " lts."}</h5>
-                    <p class="card-text">${producto.marca}</p>
-                    <button class="btn btn-dark" onclick="agregarProducto(${producto.id})">Agregar</button>
-                </div>
-                </div>`;
+                            <img src="${producto.img}" class="card-img-top" alt="${producto.nombre}">
+                            <div class="card-body">
+                                <h5 class="card-title">${producto.nombre + " " + producto.litrosBotella + " lts."}</h5>
+                                <p class="card-text">${producto.marca}</p>
+                            </div>  
+                            <div class="card-body d-flex justify-content-center d-flex align-items-end">  
+                                <button class="btn btn-dark" onclick="agregarProducto(${producto.id})">Agregar</button>
+                            </div>
+                        </div>`;
         document.getElementById("bebidaStore").innerHTML += cardProd;
     });
 };
