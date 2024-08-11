@@ -60,18 +60,19 @@
         </form>
         <div>
           <div>
-            <h6>Bebida con alcohol</h6>
-            <h6 id="litrosTotalConAlcohol">0 lt.</h6>
+            <h6>Bebida con alcohol <span id="litrosTotalConAlcohol">0</span>lts.</h6>
           </div>
           <div>
-            <h6>Bebida sin alcohol</h6>
-            <h6 id="litrosTotalSinAlcohol">0 lt.</h6>
+            <h6>Bebida sin alcohol <span id="litrosTotalSinAlcohol">0</span>lts.</h6>
           </div>
         </div>
         <!-- PRODUCTOS SELECCIONADOS -->
-        <div class="col-auto">
-          <h5>Productos seleccionados</h5>
-          <div id="productosAgregados"></div>
+        <div>
+          <div class="col-auto mt-5">
+            <h5>Productos seleccionados</h5>
+            <div id="productosAgregados">No hay productosAgregados seleccionados.</div>
+          </div>
+          <button id="limpiarCarrito" class="btn btn-danger my-3">Limpiar carrito</button>
         </div>
       </div>
     </div>
@@ -85,7 +86,6 @@
     crossorigin="anonymous"></script>
   <!-- JS -->
   <script src="./js/datos.js"></script>
-  <script src="js/carrito.js"></script>
   <script src="js/main.js"></script>
 </body>
 
