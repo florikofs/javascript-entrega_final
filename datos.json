@@ -1,0 +1,67 @@
+
+[
+    {
+        "id": 1,
+        "marca": "HEINEKEN",
+        "img": "./resources/prod_01.png",
+        "bebidaConAlcohol": true,
+        "litrosBotella": 0.330,
+        "nombre": "Cerveza rubia"
+    },
+    {
+        "id": 2,
+        "marca": "MILLER",
+        "img": "./resources/prod_02.png",
+        "bebidaConAlcohol": true,
+        "litrosBotella": 0.330,
+        "nombre": "Cerveza rubia"
+    },
+    {
+        "id": 3,
+        "marca": "CORDERO CON PIEL DE LOBO",
+        "img": "./resources/prod_03.png",
+        "bebidaConAlcohol": true,
+        "litrosBotella": 0.75,
+        "nombre": "Vino malbec"
+    },
+    {
+        "id": 4,
+        "marca": "PORTILLO",
+        "img": "./resources/prod_04.png",
+        "bebidaConAlcohol": true,
+        "litrosBotella": 0.75,
+        "nombre": "Vino malbec"
+    },
+    {
+        "id": 5,
+        "marca": "VILLA DEL SUR",
+        "img": "./resources/prod_05.png",
+        "bebidaConAlcohol": false,
+        "litrosBotella": 2.25,
+        "nombre": "Agua mineral sin gas"
+    },
+    {
+        "id": 6,
+        "marca": "SALDAN",
+        "img": "./resources/prod_06.png",
+        "bebidaConAlcohol": false,
+        "litrosBotella": 2,
+        "nombre": "Soda sifón"
+    },
+    {
+        "id": 7,
+        "marca": "SPRITE",
+        "img": "./resources/prod_07.png",
+        "bebidaConAlcohol": false,
+        "litrosBotella": 2.25,
+        "nombre": "Gaseosa lima limón"
+    },
+    {
+        "id": 8,
+        "marca": "COCA-COLA",
+        "img": "./resources/prod_08.png",
+        "bebidaConAlcohol": false,
+        "litrosBotella": 2.50,
+        "nombre": "Gaseosa sabor original"
+    }
+]

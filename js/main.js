@@ -1,4 +1,4 @@
-//CÁLCULOS
+
 class Calculos {
     constructor() {
         this.invitados = 0;
@@ -28,9 +28,9 @@ class Calculos {
         this.bebedores = this.invitados - this.abstemios;
         console.log("Cantidad de bebedores " + this.bebedores);
         this.calculoTotalLitros();
-        guardarInvitados(this.invitados, this.abstemios);
+        guardarInvitadosLS(this.invitados, this.abstemios);
         refrescarInvitadosPant();
-        cargarCarrito(inicializar);
+        cargarLista(inicializar);
     }
 
     //CALCULO DE LITROS POR TIPO DE BEBIDA SEGÚN TIPO DE INVITADO
@@ -41,7 +41,7 @@ class Calculos {
         this.totalRestanteSinAlcohol = this.totalSinAlcohol;
     }
 
-    //CALCULA LISTROS RESTANTES
+    //CALCULO DE LITROS RESTANTES
     restoTotalLitros = (litrosBotella, bebidaConAlcohol) => {
         if (bebidaConAlcohol == true) {
             this.totalRestanteConAlcohol -= litrosBotella;
@@ -51,7 +51,7 @@ class Calculos {
     }
 }
 
-//CARD PRODUCTO DEL STORE
+//CARD PRODUCTO
 function crearListadoProd(listado) {
     listado.forEach(producto => {
         let cardProd = `<div class="card text-center m-2" style="width: 16rem;">
@@ -66,32 +66,32 @@ function crearListadoProd(listado) {
     });
 };
 
-// AGREGAR AL CARRITO
+// AGREGAR A LA LISTA
 function agregarProducto(id) {
-    const carrito = JSON.parse(localStorage.getItem("productos_agregados")) || [];
-    const i = carrito.findIndex(item => item.id == id)
+    const lista = JSON.parse(localStorage.getItem("productos_agregados")) || [];
+    const i = lista.findIndex(item => item.id == id)
     const producto = PRODUCTOS.find(item => item.id == id);
     producto.cantidad = 1;
     if (i == -1) {
-        carrito.push(producto);
+        lista.push(producto);
     } else {
-        carrito[i].cantidad += 1;
+        lista[i].cantidad += 1;
     }
 
     calculos.restoTotalLitros(producto.litrosBotella, producto.bebidaConAlcohol);
     refrescarInvitadosPant();
 
-    guardarCarritoLS(carrito);
+    guardarListaLS(lista);
     const prodAgregados = document.getElementById("productosAgregados");
     prodAgregados.innerHTML = "";
-    cargarCarrito(false);
+    cargarLista(false);
 }
 
-function guardarCarritoLS(a) {
+function guardarListaLS(a) {
     localStorage.setItem("productos_agregados", JSON.stringify(a));
 }
 
-function guardarInvitados(invitados, abstemios) {
+function guardarInvitadosLS(invitados, abstemios) {
     localStorage.setItem("cantInvitados", JSON.stringify(invitados));
     localStorage.setItem("cantAbstemios", JSON.stringify(abstemios));
 }
@@ -103,13 +103,13 @@ function refrescarInvitadosPant() {
     litrosTotalSinAlcohol.innerHTML = calculos.totalRestanteSinAlcohol;
 }
 
-function cargarCarrito(inicializar) {
-    const carrito = JSON.parse(localStorage.getItem("productos_agregados")) || [];
-    carrito.forEach(e => {
+function cargarLista(inicializar) {
+    const lista = JSON.parse(localStorage.getItem("productos_agregados")) || [];
+    lista.forEach(e => {
         const prodAgregados = document.getElementById("productosAgregados");
-        prodAgregados.innerHTML += `<p>${" x" + e.cantidad + " " + e.nombre + " " + e.marca}</p>`;
+        prodAgregados.innerHTML += `<p class="my-1">${" x" + e.cantidad + " " + e.nombre + " " + e.marca}</p>`;
 
-        //CUANDO SE INICIALIZA EL CARRITO SE RECALCULAN LOS TOTALES
+        //CUANDO SE INICIALIZA LA LISTA SE RECALCULAN LOS TOTALES
         if (inicializar == true) {
             calculos.restoTotalLitros(e.litrosBotella * e.cantidad, e.bebidaConAlcohol);
         }
@@ -127,8 +127,18 @@ function cargarInvitadosLS() {
     }
 }
 
+function limpiarDatos() {
+    localStorage.clear();
+    location.reload();
+}
 
 let calculos = new Calculos();
-crearListadoProd(PRODUCTOS);
+let PRODUCTOS = [];
 cargarInvitadosLS();
 
+fetch('/datos.json')
+    .then((res) => res.json())
+    .then((data) => {
+        crearListadoProd(data);
+        PRODUCTOS = data;
+    })
