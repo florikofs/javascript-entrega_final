@@ -28,23 +28,26 @@
         </div>
       </div>
       <!-- PANEL LATERAL -->
-      <div class="col-3 pt-5 px-3 bg-body-secondary">
+      <div class="col-3 pt-3 px-3 bg-body-secondary">
         <h5>Invitados</h5>
         <!-- INVITADOS -->
         <form id="formulario" action="#">
-          <div class="mb-3">
+          <div>
             <label for="cantInvitados" class="form-label">¿Cuánta gente asistirá a la fiesta?</label>
             <input type="number" class="form-control" id="cantInvitados" placeholder="Ingresá la cantidad de invitados">
           </div>
-          <div class="mb-3">
+          <div class="my-3">
             <label for="cantAbstemios" class="form-label">¿Cuántos no toman alcohol?</label>
             <input type="number" class="form-control" id="cantAbstemios" placeholder="Ingresá la cantidad de abstemios">
           </div>
           <div class="col-auto">
-            <button type="submit" class="btn btn-primary mb-3">Calcular</button>
+            <button type="submit" class="btn btn-primary">Calcular</button>
           </div>
         </form>
+        <hr class="my-3">
+        <!-- CALCULO LITROS -->
         <div>
+          <h5>Cálculo de bebidas</h5>
           <div>
             <h6>Bebida con alcohol <span id="litrosTotalConAlcohol">0</span>lts.</h6>
           </div>
@@ -52,13 +55,15 @@
             <h6>Bebida sin alcohol <span id="litrosTotalSinAlcohol">0</span>lts.</h6>
           </div>
         </div>
+        <hr class="my-3">
         <!-- PRODUCTOS SELECCIONADOS -->
-        <div>
-          <div class="col-auto mt-5">
-            <h5>Productos seleccionados</h5>
-            <div id="productosAgregados">No hay productosAgregados seleccionados.</div>
+        <div class="col-auto">
+          <h5>Productos seleccionados</h5>
+          <div id="productosAgregados"></div>
+          <div>
+            <hr class="my-4">
+            <button class="btn btn-danger" onclick="limpiarDatos()">Limpiar datos</button>
           </div>
-          <button class="btn btn-danger my-3" onclick="limpiarDatos()">Limpiar</button>
         </div>
       </div>
     </div>

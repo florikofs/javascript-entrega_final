@@ -20,7 +20,7 @@ class Calculos {
         let inicializar = false;
         if (e != null) {
             localStorage.clear();
-            document.getElementById("productosAgregados").innerHTML = "";
+            document.getElementById("productosAgregados").innerHTML = "No hay productos seleccionados.";
             inicializar = true;
         }
         this.invitados = parseInt(document.getElementById("cantInvitados").value);
@@ -77,7 +77,7 @@ function agregarProducto(id) {
             icon: "warning"
         });
     } else {
-        const lista = JSON.parse(localStorage.getItem("productos_agregados")) || [];
+        const lista = JSON.parse(localStorage.getItem("productosAgregadosLS")) || [];
         const i = lista.findIndex(item => item.id == id)
         const producto = PRODUCTOS.find(item => item.id == id);
         producto.cantidad = 1;
@@ -98,7 +98,7 @@ function agregarProducto(id) {
 }
 
 function guardarListaLS(a) {
-    localStorage.setItem("productos_agregados", JSON.stringify(a));
+    localStorage.setItem("productosAgregadosLS", JSON.stringify(a));
 }
 
 function guardarInvitadosLS(invitados, abstemios) {
@@ -114,16 +114,21 @@ function refrescarInvitadosPant() {
 }
 
 function cargarLista(inicializar) {
-    const lista = JSON.parse(localStorage.getItem("productos_agregados")) || [];
-    lista.forEach(e => {
-        const prodAgregados = document.getElementById("productosAgregados");
-        prodAgregados.innerHTML += `<p class="my-1">${" x" + e.cantidad + " " + e.nombre + " " + e.marca}</p>`;
+    if (inicializar == true) {
+        const textoInicial = document.getElementById("productosAgregados");
+        textoInicial.innerHTML = `<p Para agregar productos, primero completá los datos de invitados</p>`;
+    } else {
+        const lista = JSON.parse(localStorage.getItem("productosAgregadosLS")) || [];
+        lista.forEach(e => {
+            const prodAgregados = document.getElementById("productosAgregados");
+            prodAgregados.innerHTML += `<p class="my-1">${" x" + e.cantidad + " " + e.nombre + " " + e.marca}</p>`;
 
-        //CUANDO SE INICIALIZA LA LISTA SE RECALCULAN LOS TOTALES
-        if (inicializar == true) {
-            calculos.restoTotalLitros(e.litrosBotella * e.cantidad, e.bebidaConAlcohol);
-        }
-    })
+            //CUANDO SE INICIALIZA LA LISTA SE RECALCULAN LOS TOTALES
+            if (inicializar == true) {
+                calculos.restoTotalLitros(e.litrosBotella * e.cantidad, e.bebidaConAlcohol);
+            }
+        })
+    }
     refrescarInvitadosPant();
 }
 
@@ -145,6 +150,8 @@ function limpiarDatos() {
 let calculos = new Calculos();
 let PRODUCTOS = [];
 cargarInvitadosLS();
+cargarLista(true);
+
 
 fetch('datos.json')
     .then((res) => res.json())
