@@ -114,21 +114,16 @@ function refrescarInvitadosPant() {
 }
 
 function cargarLista(inicializar) {
-    if (inicializar == true) {
-        const textoInicial = document.getElementById("productosAgregados");
-        textoInicial.innerHTML = `<p Para agregar productos, primero completá los datos de invitados</p>`;
-    } else {
-        const lista = JSON.parse(localStorage.getItem("productosAgregadosLS")) || [];
-        lista.forEach(e => {
-            const prodAgregados = document.getElementById("productosAgregados");
-            prodAgregados.innerHTML += `<p class="my-1">${" x" + e.cantidad + " " + e.nombre + " " + e.marca}</p>`;
+    const lista = JSON.parse(localStorage.getItem("productosAgregadosLS")) || [];
+    lista.forEach(e => {
+        const prodAgregados = document.getElementById("productosAgregados");
+        prodAgregados.innerHTML += `<p class="my-1">${" x" + e.cantidad + " " + e.nombre + " " + e.marca}</p>`;
 
-            //CUANDO SE INICIALIZA LA LISTA SE RECALCULAN LOS TOTALES
-            if (inicializar == true) {
-                calculos.restoTotalLitros(e.litrosBotella * e.cantidad, e.bebidaConAlcohol);
-            }
-        })
-    }
+        //CUANDO SE INICIALIZA LA LISTA SE RECALCULAN LOS TOTALES
+        if (inicializar == true) {
+            calculos.restoTotalLitros(e.litrosBotella * e.cantidad, e.bebidaConAlcohol);
+        }
+    })
     refrescarInvitadosPant();
 }
 
@@ -139,6 +134,9 @@ function cargarInvitadosLS() {
         document.getElementById("cantInvitados").value = invitados;
         document.getElementById("cantAbstemios").value = abstemios;
         calculos.calculoBebedores(null);
+    } else {
+        let textoInicial = document.getElementById("productosAgregados");
+        textoInicial.innerHTML = `<p> Para agregar productos, primero completá los datos de invitados.</p>`;
     }
 }
 
@@ -150,7 +148,6 @@ function limpiarDatos() {
 let calculos = new Calculos();
 let PRODUCTOS = [];
 cargarInvitadosLS();
-cargarLista(true);
 
 
 fetch('datos.json')
