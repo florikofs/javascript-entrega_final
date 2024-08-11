@@ -68,23 +68,31 @@ function crearListadoProd(listado) {
 
 // AGREGAR A LA LISTA
 function agregarProducto(id) {
-    const lista = JSON.parse(localStorage.getItem("productos_agregados")) || [];
-    const i = lista.findIndex(item => item.id == id)
-    const producto = PRODUCTOS.find(item => item.id == id);
-    producto.cantidad = 1;
-    if (i == -1) {
-        lista.push(producto);
+    if (calculos.invitados == 0) {
+        Swal.fire({
+            title: "No se pudo agregar el producto",
+            text: "Primero necesitás especificar los invitados y abstemios.",
+            icon: "warning"
+        });
     } else {
-        lista[i].cantidad += 1;
+        const lista = JSON.parse(localStorage.getItem("productos_agregados")) || [];
+        const i = lista.findIndex(item => item.id == id)
+        const producto = PRODUCTOS.find(item => item.id == id);
+        producto.cantidad = 1;
+        if (i == -1) {
+            lista.push(producto);
+        } else {
+            lista[i].cantidad += 1;
+        }
+
+        calculos.restoTotalLitros(producto.litrosBotella, producto.bebidaConAlcohol);
+        refrescarInvitadosPant();
+
+        guardarListaLS(lista);
+        const prodAgregados = document.getElementById("productosAgregados");
+        prodAgregados.innerHTML = "";
+        cargarLista(false);
     }
-
-    calculos.restoTotalLitros(producto.litrosBotella, producto.bebidaConAlcohol);
-    refrescarInvitadosPant();
-
-    guardarListaLS(lista);
-    const prodAgregados = document.getElementById("productosAgregados");
-    prodAgregados.innerHTML = "";
-    cargarLista(false);
 }
 
 function guardarListaLS(a) {
