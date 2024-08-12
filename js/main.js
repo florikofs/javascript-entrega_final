@@ -17,16 +17,15 @@ class Calculos {
     // CALCULO INVITADOS
     calculoBebedores = (e) => {
         //SI EL USUARIO PRESIONÓ EL BOTÓN CALCULAR SE BORRA EL STORAGE
-        let inicializar = false;
+        let inicializar = true;
         if (e != null) {
             localStorage.clear();
             document.getElementById("productosAgregados").innerHTML = "No hay productos seleccionados.";
-            inicializar = true;
+            inicializar = false;
         }
         this.invitados = parseInt(document.getElementById("cantInvitados").value);
         this.abstemios = parseInt(document.getElementById("cantAbstemios").value);
         this.bebedores = this.invitados - this.abstemios;
-        console.log("Cantidad de bebedores " + this.bebedores);
         this.calculoTotalLitros();
         guardarInvitadosLS(this.invitados, this.abstemios);
         refrescarInvitadosPant();
@@ -130,13 +129,18 @@ function cargarLista(inicializar) {
 function cargarInvitadosLS() {
     const invitados = JSON.parse(localStorage.getItem("cantInvitados")) || 0;
     const abstemios = JSON.parse(localStorage.getItem("cantAbstemios")) || 0;
+    const lista = JSON.parse(localStorage.getItem("productosAgregadosLS")) || [];
     if (invitados != 0 && abstemios != 0) {
         document.getElementById("cantInvitados").value = invitados;
         document.getElementById("cantAbstemios").value = abstemios;
         calculos.calculoBebedores(null);
+        if (lista.length == 0){
+            let textoInicial = document.getElementById("productosAgregados");
+            textoInicial.innerHTML = `<p>No hay productos seleccionados.</p>`;
+        }
     } else {
         let textoInicial = document.getElementById("productosAgregados");
-        textoInicial.innerHTML = `<p> Para agregar productos, primero completá los datos de invitados.</p>`;
+        textoInicial.innerHTML = `<p>Para agregar productos, primero completá los datos de invitados.</p>`;
     }
 }
 
